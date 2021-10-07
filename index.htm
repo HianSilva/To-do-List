@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>To-Do</title>
+</head>
+<body>
+  <div id='container'>
+    <h1>TO-DO LIST</h1>
+    <hr>
+    <div class=addTaskArea>
+      <input type="text" name="New task" id="newTaskInput" placeholder="New task" autofocus>
+      <button onClick='addTask()'>Add Task</button>
+    </div>
+    <div id='toDoArea'>
+      <h2>To-DO</h2>
+    </div>
+    <div id='doneArea'>
+      <h2>Done</h2>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

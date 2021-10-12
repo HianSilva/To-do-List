@@ -85,9 +85,12 @@ function deleteTask(value) {
   const taskToDelete = document.querySelector('#' + value.id)
   const taskAreaId = '#' + taskToDelete.parentElement.id //get the parent element from the task to be deleted
 
-  document.querySelector(taskAreaId).removeChild(taskToDelete)
-
-  updateEmptyAreaAlert()
+  taskToDelete.setAttribute('class', 'deletedTask')
+  
+  setTimeout(function() {
+    document.querySelector(taskAreaId).removeChild(taskToDelete)
+    updateEmptyAreaAlert()
+  }, 150)
 }
 
 function completeTask(value) {

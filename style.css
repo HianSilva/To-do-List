@@ -105,3 +105,46 @@ button {
 #undoTaskButton {
   background-color: var(--blue);
 }
+
+/*Animations*/
+
+@keyframes taskFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes deleteMove {
+  from {
+    transform: translateX(0)
+  }to {
+    transform: translateX(100%)
+  }
+}
+
+@keyframes buttonClick {
+  from {
+    transform: scale(0.9)
+  }to {
+    transform: scale(1)
+  }
+}
+
+.task {
+  animation-name: taskFade;
+  animation-duration: 300ms;
+}
+
+.deletedTask {
+  animation-name: deleteMove;
+  animation-duration: 200ms; 
+}
+
+button:active {
+  animation-name: buttonClick;
+  animation-duration: 100ms;
+}

@@ -6,24 +6,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="src/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
   <title>To-Do</title>
 </head>
 <body>
-  <div id='container'>
+  <main id='container'>
     <h1>TO-DO LIST</h1>
+    
     <hr>
-    <div class=addTaskArea>
+    
+    <section class=addTaskArea>
       <input type="text" name="New task" id="newTaskInput" placeholder="New task" autofocus>
       <button onClick='addTask()'>Add Task</button>
-    </div>
-    <div id='toDoArea'>
-      <h2>To-DO</h2>
-    </div>
-    <div id='doneArea'>
-      <h2>Done</h2>
-    </div>
-  </div>
+    </section>
+
+    <h2>To-DO</h2>
+    <section id='toDoArea'>
+      <p id="emptyToDoArea">There's no tasks here.</p>
+    </section>
+
+    <h2>Done</h2>
+    <section id='doneArea'>
+      <p id="emptyDoneArea">There's no tasks here.</p>
+    </section>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@
 body {
   background-color: var(--background-color);
   color: var(--white);
+  height: 100%;
 }
 
 h1, h2 {
@@ -147,4 +148,10 @@ button {
 button:active {
   animation-name: buttonClick;
   animation-duration: 100ms;
+}
+
+#emptyToDoArea, #emptyDoneArea {
+  display: none;
+  animation-name: taskFade;
+  animation-duration: 300ms;
 }

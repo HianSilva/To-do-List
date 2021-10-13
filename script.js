@@ -4,6 +4,8 @@ const doneArea = document.querySelector('#doneArea')
 const toDoArea = document.querySelector('#toDoArea')
 const body = document.querySelector('body')
 
+render();
+
 body.addEventListener('keypress', (event) => { //Event to make possible add tasks with Enter Key
   addTaskWithEnter(event)
 })
@@ -11,21 +13,21 @@ body.addEventListener('keypress', (event) => { //Event to make possible add task
 function updateEmptyAreaAlert() {
   const toDoIsEmpty = toDoArea.querySelectorAll('div').length === 0
   const doneIsEmpty = doneArea.querySelectorAll('div').length === 0
+  const noTasks = tasksNumber < 0
 
   const toDoAreaEmptyAlert = document.querySelector('#emptyToDoArea')
   const doneAreaEmptyAlert = document.querySelector('#emptyDoneArea')
 
-  if(!toDoIsEmpty) {
-    toDoAreaEmptyAlert.style.display = 'none'
-    console.log('empty')
-  }else {
+  if(toDoIsEmpty && !noTasks) {
     toDoAreaEmptyAlert.style.display = 'block'
+  }else {
+    toDoAreaEmptyAlert.style.display = 'none'
   }
 
-  if(!doneIsEmpty) {
-    doneAreaEmptyAlert.style.display = 'none'
-  }else {
+  if(doneIsEmpty && !noTasks) {
     doneAreaEmptyAlert.style.display = 'block'
+  }else {
+    doneAreaEmptyAlert.style.display = 'none'
   }
 }
 
@@ -44,7 +46,6 @@ function addTaskWithEnter(event) {
   const textInputIsOnFocus= document.querySelector('#newTaskInput') == document.activeElement
   
   if(enterPressed && textInputIsOnFocus) {
-    console.log('Enter Pressed')
     addTask()
   }
 }
@@ -63,8 +64,8 @@ function addTask() {
   newTask.innerHTML = `
     <span>${taskText}</span>
     <div>
-      <button onClick='deleteTask(${taskId})')' id='deleteTaskButton'> 🗑 </button>
-      <button onClick='completeTask(${taskId})' id='completeTaskButton'> ✔ </button>
+      <button onClick='deleteTask(${taskId})')' id='deleteTaskButton'>🗑</button>
+      <button onClick='completeTask(${taskId})' id='completeTaskButton'>✔</button>
     </div>
   `
 
@@ -72,12 +73,12 @@ function addTask() {
     alert('The task have no content!')
   }else {
     toDoArea.appendChild(newTask)
-
     textInput.value = ''
     textInput.focus()
+    
+    updateCookies()
+    updateEmptyAreaAlert()
   }
-
-  updateEmptyAreaAlert()
 }
 
 function deleteTask(value) {
@@ -87,9 +88,10 @@ function deleteTask(value) {
 
   taskToDelete.setAttribute('class', 'deletedTask')
   
-  setTimeout(function() {
+  setTimeout(() => { //delay to delete, update emptyAreaAlert and Cookies only when the deleteAnimation end.
     document.querySelector(taskAreaId).removeChild(taskToDelete)
     updateEmptyAreaAlert()
+    updateCookies()
   }, 150)
 }
 
@@ -103,6 +105,7 @@ function completeTask(value) {
 
   doneArea.appendChild(taskCompleted)
 
+  updateCookies()
   updateEmptyAreaAlert()
 }
 
@@ -116,5 +119,41 @@ function undoTask(value) {
 
   toDoArea.appendChild(taskToUndo)
 
+  updateCookies()
   updateEmptyAreaAlert()
+}
+
+//Cookies functions
+
+function render() {
+  if(Cookies.get('tasksToDo') !== undefined) {
+    toDoArea.innerHTML = Cookies.get('tasksToDo')
+  }
+
+  if(Cookies.get('tasksDone') !== undefined) {
+    doneArea.innerHTML = Cookies.get('tasksDone')
+  }
+  
+  if(Cookies.get('tasksNumber') !== undefined) {
+    tasksNumber = Cookies.get('tasksNumber')
+  }
+
+  updateEmptyAreaAlert()
+}
+
+function updateCookies() {
+  let tasksToDo 
+  let tasksDone 
+
+  if(toDoArea.querySelectorAll('.task').length >= 0) {
+    tasksToDo = toDoArea.innerHTML
+  }
+
+  if(doneArea.querySelectorAll('.task').length >= 0) {
+    tasksDone = doneArea.innerHTML
+  }
+
+  Cookies.set('tasksToDo', tasksToDo, { expires: 3650})
+  Cookies.set('tasksDone', tasksDone, { expires: 3650})
+  Cookies.set('tasksNumber', tasksNumber, { expires: 3650})
 }
